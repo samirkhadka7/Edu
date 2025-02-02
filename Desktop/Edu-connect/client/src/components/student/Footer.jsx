@@ -33,7 +33,7 @@ const Footer = () => {
           <button className='bg-blue-600 w-24 h-9 text-white rounded'>Follow</button>
         </div>
       </div>
-      <p className='py-4 text-center text-xs md:text-sm text-white/60'>Copyright 2025 © Samir Khadka. All Right Reserved.</p>
+      <p className='py-4 text-center text-xs md:text-sm text-white/60'>Copyright 2025 © Samir Khadka Razbar. All Right Reserved.</p>
     </footer>
   )
 }
