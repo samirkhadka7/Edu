@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { AppContext } from '../../context/AppContext'
 import Loading from '../../components/student/Loading'
 import { assets } from '../../assets/assets'
+import humanizeDuration from 'humanize-duration'
 
 const CourseDetails = () => {
   const {id} = useParams ()
@@ -27,7 +28,7 @@ const CourseDetails = () => {
       <div className='absolute top-0 left-0 w-full h-section-height -z-1 bg-gradient-to-b from-cyan-100/70'></div>
       {/* left cloumn */}
       <div className='max-w-xl z-10 text-gray-500'>
-      <h1 className='md: text-course-deatails-heading-large text-course-deatails-heading-small font-semibold text-gray-800'>{courseData.courseTitle}</h1>
+        <h1 className='md: text-course-deatails-heading-large text-course-deatails-heading-small font-semibold text-gray-800'>{courseData.courseTitle}</h1>
       {/* <p dangerouslySetInnerHTML={{f__html: courseData.courseDescription.slice(0,200)}}></p> */}
       <p className='pt-4 md:text-base text-sm' dangerouslySetInnerHTML={{__html: courseData.courseDescription.slice(0,200)}}></p>
 
@@ -43,6 +44,42 @@ const CourseDetails = () => {
       </div>
       <p className='text-sm'>Course by <span className='text-blue-600 underline'>Samir Khadka</span></p>
 
+      <div className='pt-8 text-gray-800'>
+        <h2 className='text-x] font-semibold'>Course Structure</h2>
+        <div className='pt-5'>
+
+        {courseData.courseContent.map((chapter, index)=> (
+          <div key={index} className='border border-gray-300 bg-white mb-2 rounded'>
+            <div className='flex items-center justify-between px-4 py-3 cursor-pointer select-none'>
+              <div className='flex items-center gap-2'>
+                <img src={assets.down_arrow_icon} alt="arrow icon" />
+                <p className='font-medium md:text-base text-sm'>{chapter.chapterTitle}</p>
+              </div>
+              <p className='text-sm md: text-default'>{chapter.chapterContent.length} lectures -
+              {calculateChapterTime(chapter)}</p>
+            </div>
+
+            <div>
+              <ul>
+                {chapter.chapterContent.map((lecture, i)=> (
+                <li key={i}>
+                  <img src={assets.play_icon} alt="play icon" className='w-4h-4 mt-1' />
+                  <div>
+                    <p>{lecture.lectureTitle}</p>
+                    <div>
+                      {lecture.isPreviewFree && <p>Preview</p>}
+                      <p>{humanizeDuration(lecture.lectureDuration * 60 * 1000, {units: ['h', 'm']})}</p>
+                    </div>
+                  </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}  
+      </div>
+
+      </div>
       </div>
 
       {/* right column */}
