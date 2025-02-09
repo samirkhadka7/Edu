@@ -229,7 +229,8 @@ export const dummyCourses = [
                         "lectureId": "lecture1",
                         "lectureTitle": "What is JavaScript?",
                         "lectureDuration": 16,
-                        "lectureUrl": "https://youtu.be/CBWnBi-awSA",
+                        // "lectureUrl": "https://youtu.be/CBWnBi-awSA",
+                        "lectureUrl": "https://youtu.be/ajdRvxDWH4w?si=B3IpLRmQ8pYOFAWV",
                         "isPreviewFree": true,
                         "lectureOrder": 1
                     },
@@ -237,7 +238,8 @@ export const dummyCourses = [
                         "lectureId": "lecture2",
                         "lectureTitle": "Setting Up Your Environment",
                         "lectureDuration": 19,
-                        "lectureUrl": "https://youtu.be/4l87c2aeB4I",
+                        // "lectureUrl": "https://youtu.be/4l87c2aeB4I",
+                        "lectureUrl": "https://youtu.be/ajdRvxDWH4w?si=B3IpLRmQ8pYOFAWV",
                         "isPreviewFree": false,
                         "lectureOrder": 2
                     }
@@ -252,7 +254,8 @@ export const dummyCourses = [
                         "lectureId": "lecture3",
                         "lectureTitle": "Understanding Variables",
                         "lectureDuration": 20,
-                        "lectureUrl": "https://youtu.be/pZQeBJsGoDQ",
+                        // "lectureUrl": "https://youtu.be/pZQeBJsGoDQ",
+                        "lectureUrl": "https://youtu.be/ajdRvxDWH4w?si=B3IpLRmQ8pYOFAWV",
                         "isPreviewFree": true,
                         "lectureOrder": 1
                     },
@@ -260,7 +263,8 @@ export const dummyCourses = [
                         "lectureId": "lecture4",
                         "lectureTitle": "Data Types in JavaScript",
                         "lectureDuration": 10,
-                        "lectureUrl": "https://youtu.be/ufHT2WEkkC4",
+                        // "lectureUrl": "https://youtu.be/ufHT2WEkkC4",
+                        "lectureUrl": "https://youtu.be/ajdRvxDWH4w?si=B3IpLRmQ8pYOFAWV",
                         "isPreviewFree": false,
                         "lectureOrder": 2
                     }
@@ -302,7 +306,8 @@ export const dummyCourses = [
                         "lectureId": " lecture1",
                         "lectureTitle": "Lists and Tuples",
                         "lectureDuration": 720,
-                        "lectureUrl": "https://youtu.be/HdLIMoQkXFA",
+                        // "lectureUrl": "https://youtu.be/HdLIMoQkXFA",
+                        "lectureUrl": "https://youtu.be/ajdRvxDWH4w?si=B3IpLRmQ8pYOFAWV",
                         "isPreviewFree": true,
                         "lectureOrder": 1
                     },
@@ -310,7 +315,8 @@ export const dummyCourses = [
                         "lectureId": "lecture2",
                         "lectureTitle": "Dictionaries and Sets",
                         "lectureDuration": 850,
-                        "lectureUrl": "https://youtu.be/HdLIMoQkXFA",
+                        // "lectureUrl": "https://youtu.be/HdLIMoQkXFA",
+                        "lectureUrl": "https://youtu.be/ajdRvxDWH4w?si=B3IpLRmQ8pYOFAWV",
                         "isPreviewFree": false,
                         "lectureOrder": 2
                     }
@@ -325,7 +331,8 @@ export const dummyCourses = [
                         "lectureId": "lecture3",
                         "lectureTitle": "Classes and Objects",
                         "lectureDuration": 900,
-                        "lectureUrl": "https://youtu.be/HdLIMoQkXFA",
+                        // "lectureUrl": "https://youtu.be/HdLIMoQkXFA",
+                        "lectureUrl": "https://youtu.be/ajdRvxDWH4w?si=B3IpLRmQ8pYOFAWV",
                         "isPreviewFree": true,
                         "lectureOrder": 1
                     },
@@ -333,7 +340,8 @@ export const dummyCourses = [
                         "lectureId": "lecture4",
                         "lectureTitle": "Inheritance and Polymorphism",
                         "lectureDuration": 950,
-                        "lectureUrl": "https://youtu.be/HdLIMoQkXFA",
+                        // "lectureUrl": "https://youtu.be/HdLIMoQkXFA",
+                        "lectureUrl": "https://youtu.be/ajdRvxDWH4w?si=B3IpLRmQ8pYOFAWV",
                         "isPreviewFree": false,
                         "lectureOrder": 2
                     }
