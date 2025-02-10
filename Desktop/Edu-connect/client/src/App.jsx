@@ -13,6 +13,8 @@ import MyCourses from './pages/educator/MyCourses'
 import Navbar from './components/student/Navbar'
 import Login from './pages/student/Login'
 import Register from './pages/student/Register'
+import StudentsEnrolled from './pages/educator/StudentsEnrolled'
+import "quill/dist/quill.snow.css";
 
 const App = () => {
   return (
@@ -35,6 +37,7 @@ const App = () => {
           <Route path='/educator' element={<Dashboard />}/>
           <Route path='add-course' element={<AddCourse />}/>
           <Route path='my-courses' element={<MyCourses />}/>
+          <Route path='student-enrolled' element={<StudentsEnrolled />}/>
         </Route>
       </Routes>
     </div>
