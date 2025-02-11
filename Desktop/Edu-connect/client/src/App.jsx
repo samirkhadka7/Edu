@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/student/Home'
 import CoursesList from './pages/student/CoursesList'
@@ -11,12 +11,15 @@ import Dashboard from './pages/educator/Dashboard'
 import AddCourse from './pages/educator/AddCourse'
 import MyCourses from './pages/educator/MyCourses'
 import Navbar from './components/student/Navbar'
-import Login from './pages/student/Login'
-import Register from './pages/student/Register'
+// import Login from './pages/student/Login'
+// import Register from './pages/student/Register'
 import StudentsEnrolled from './pages/educator/StudentsEnrolled'
 import "quill/dist/quill.snow.css";
 
+
+
 const App = () => {
+
   return (
       <div className='text-default min-h-screen bg-white'>
 
@@ -29,8 +32,10 @@ const App = () => {
         <Route path='/my-enrollments' element={<MyEnrollments />}/>
         <Route path='/player/:courseId' element={<Player />}/>
         <Route path='/loading/:path' element={<Loading />}/>
-        <Route path='/logins' element={<Login />}/>
-        <Route path='/registers' element={<Register />}/>
+        {/* <Route path='/logins' element={<Login />}/>
+        <Route path='/registers' element={<Register />}/> */}
+        {/* <Route path='/login' element={<Login />}/>
+        <Route path='/register' element={<Register />}/> */}
 
 
         <Route path='/educator' element={<Educator />}>
