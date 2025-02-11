@@ -13,7 +13,7 @@ const AddCourse = () => {
   const [discount, setDiscount] = useState(0);
   const [image, setImage] = useState(null);
   const [chapters, setChapters] = useState([]);
-  const [showPopup, setShowpopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [currentChapterId, setCurrentChapterId] = useState(null);
 
   const [lectureDetails, setLectureDetails] = useState({
@@ -77,19 +77,56 @@ const AddCourse = () => {
   const handleLecture = (action, chapterId, lectureIndex) =>{
     if (action === 'add') {
       setCurrentChapterId (chapterId);
-      setShowpopup (true);
+      setShowPopup (true);
     } else if (action === 'remove') {
       setChapters(
-        chapters.map ((chapter) => {
+        chapters.map((chapter) => {
           if (chapter.chapterId === chapterId) {
             chapter.chapterContent.splice(lectureIndex,1);
           }
           return chapter;
         })
-      );
+      // );
+      // setChapters(
+      //   chapters.map(chapter => 
+      //     chapter.chapterId === chapterId
+      //       ? { ...chapter, chapterContent: chapter.chapterContent.filter((_, index) => index !== lectureIndex) }
+      //       : chapter
+      //   )
+      // );
+    );
     }
   };
 
+  const addLecture = () => {
+    setChapters(
+      chapters.map((chapter) => {
+        if (chapter.chapterId === currentChapterId) {
+          const newLecture = {
+            ...lectureDetails,
+            lectureOrder: chapter.chapterContent.length > 0 
+              ? chapter.chapterContent.slice(-1)[0].lectureOrder + 1 
+              : 1,
+            lectureId: uniqid(),
+          };
+          chapter.chapterContent.push(newLecture);
+          
+        }
+        return chapter;
+      })
+    );
+    setShowPopup(false);
+    setLectureDetails({
+    lectureTitle: '',
+    lectureDuration: '',
+    lectureUrl: '',
+    isPreviewFree: false,
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
+  
 
   useEffect(() => {
     // Initiate Quill only once
@@ -102,7 +139,7 @@ const AddCourse = () => {
 
   return (
     <div className="h-screen overflow-scroll flex flex-col items-start justify-between md:p-8 md:pb-0 p-4 pt-8 pb-0">
-      <form className="flex flex-col gap-4 max-w-4xl w-full text-gray-500">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-4xl w-full text-gray-500">
         <div className="flex flex-col gap-1">
           <p>Course Title</p>
           <input
@@ -194,7 +231,9 @@ const AddCourse = () => {
                     lectureDuration} mins - <a href={lecture.lectureUrl}
                     target="_blank" className="text-blue-500">Link</a> - {lecture.
                     isPreviewFree ? 'Free Preview' : 'Paid'}</span>
-                    <img sre={assets.cross_icon} alt="" onClick={()=>handleLecture ('remove', chapter.chapterId, lectureIndex)} className='cursor-pointer'/>
+                    {/* <img src={assets.cross_icon} alt="" onClick={() => handleLecture('remove', chapter.chapterId, lectureIndex)} className='cursor-pointer'/> */}
+                    <img src={assets.cross_icon}alt="" className="cursor-pointer" onClick={() => handleChapter('remove', chapter.chapterId)}/>
+
                 </div>
                 ))}
                 <div>
@@ -216,31 +255,39 @@ const AddCourse = () => {
 
               <div className="mb-2">
                 <p>Lecture Title</p>
-                <input type="text"
+                <input
+                type="text"
                 className="mt-1 block w-full border rounded py-1 px-2"
                 value={lectureDetails.lectureTitle}
-                onChange={(e) => setLectureDetails({ ...lectureDetails,
-                lectureTitle: e.target.value })}
+                onChange={(e) => setLectureDetails({
+                ...lectureDetails,
+                lectureTitle: e.target.value
+                })}
                 />
               </div>
 
-              {/* <div className="mb-2">
-              <p>Duration(minutes) </p>
-              <input 
-              type="number" 
-              className="mt-1 block w-full border rounded py-1 px-2"/>
-              value={lectureDetails.lectureDuration}
-              onChange={(e) => setLectureDetails({ ...lectureDetails,
-              lectureDuration: e.target.value })}
-              </div> */}
 
-              <input 
+              <div className="mb-2">
+                <p>Duration (minutes)</p>
+                <input
+                type="number"
+                className="mt-1 block w-full border rounded py-1 px-2"
+                value={lectureDetails.lectureDuration}
+                onChange={(e) => setLectureDetails({ 
+                ...lectureDetails, 
+                lectureDuration: e.target.value 
+                })}
+               />
+              </div>
+
+
+              {/* <input 
               type="text" 
               className="mt-1 block w-full border rounded py-1 px-2" 
               value={lectureDetails.lectureTitle} 
               onChange={(e) => setLectureDetails({ ...lectureDetails,
               lectureTitle: e.target.value })} 
-              />
+              /> */}
               
 
 
@@ -248,7 +295,7 @@ const AddCourse = () => {
                 <p>Lecture URL</p>
                 <input type="text"
                 className="mt-1 block w-full border rounded py-1 px-2"
-                value={lectureDetails.lectureTitle}
+                value={lectureDetails.lectureUrl}
                 onChange={(e) => setLectureDetails({ ...lectureDetails,
                 lectureUrl: e.target.value })}
                 />
@@ -267,7 +314,7 @@ const AddCourse = () => {
               </div>
 
               <button type='button' className="w-full bg-blue-400 text-white px-4
-              py-2 rounded">Add</button>
+              py-2 rounded" onClick={addLecture}>Add</button>
               
               <img onClick={() => setShowPopup(false)} src={assets.cross_icon}
               className='absolute top-4 right-4 w-4 cursor-pointer' alt=" "/>
