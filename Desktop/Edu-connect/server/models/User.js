@@ -19,38 +19,38 @@
 // export default User
 
 
-import { DataTypes } from 'sequelize';
-import sequelize from './database';
+import { DataTypes } from "sequelize";
+import sequelize from "../configs/pdatabase.js"; // Correct import
 
-const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.UUID, // Use UUID instead of MongoDB's ObjectId
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
+const User = sequelize.define(
+  "User",
+  {
+    id: {
+      type: DataTypes.STRING,
+      primaryKey: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "https://example.com/default-avatar.png",
+    },
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  imageUrl: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-}, {
-  timestamps: true, // Adds createdAt and updatedAt
-});
-
-// Define relationships (e.g., enrolledCourses)
-User.associate = (models) => {
-  User.belongsToMany(models.Course, {
-    through: 'UserCourse', // Junction table for many-to-many
-    foreignKey: 'userId',
-  });
-};
+  {
+    timestamps: true,
+    freezeTableName: true, // Prevents table name from becoming "Users"
+  }
+);
 
 export default User;

@@ -1,23 +1,25 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import sequelize from "./configs/pdatabase.js"; // Import sequelize
-import { clerkWebhooks } from "./controllers/webhooks.js"; // Correct import statement
+import sequelize from "./configs/pdatabase.js";
+import { clerkWebhooks } from "./controllers/webhooks.js";
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf.toString(); } })); // Clerk Webhooks need raw body
+
 app.post("/clerk-webhook", clerkWebhooks);
 
-// Sync database
+// Sync database after successful connection
 sequelize
   .sync()
   .then(() => console.log(" Database synced"))
   .catch((err) => console.error("⚠️ Error syncing database:", err));
 
-app.listen(5001, () => console.log("Server running on port 5001"));
+app.listen(5001, () => console.log(" Server running on port 5001"));
+
 
 
 

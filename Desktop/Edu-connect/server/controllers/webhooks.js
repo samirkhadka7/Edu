@@ -52,64 +52,63 @@
 // }
 
 
+
 import { Webhook } from "svix";
-import User from "../models/user.js"; // Import Sequelize User model
+import User from "../models/user.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const clerkWebhooks = async (req, res) => {
+  const payload = req.rawBody;
+  const headers = {
+    "svix-id": req.headers["svix-id"],
+    "svix-timestamp": req.headers["svix-timestamp"],
+    "svix-signature": req.headers["svix-signature"],
+  };
+
   try {
     const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
-
-    // Verify the webhook signature
-    await whook.verify(JSON.stringify(req.body), {
-      "svix-id": req.headers["svix-id"],
-      "svix-timestamp": req.headers["svix-timestamp"],
-      "svix-signature": req.headers["svix-signature"],
-    });
-
-    const { data, type } = req.body;
+    const event = whook.verify(payload, headers);
+    const { data, type } = event;
 
     switch (type) {
       case "user.created": {
         const userData = {
-          id: data.id, // Use `id` instead of `_id` (Sequelize uses `id` as primary key)
-          email: data.email_address[0].email_address,
-          name: `${data.first_name} ${data.last_name}`,
-          imageUrl: data.image_url,
+          id: data.id,
+          email: data.email_addresses?.[0]?.email_address || "no-email@example.com",
+          name: `${data.first_name || ""} ${data.last_name || ""}`.trim(),
+          imageUrl: data.image_url || "https://example.com/default-avatar.png",
         };
 
-        // Create a new user in the database
         await User.create(userData);
-        res.json({ success: true });
-        break;
+        return res.status(200).json({ success: true });
       }
 
       case "user.updated": {
-        const userData = {
-          email: data.email_address[0].email_address,
-          name: `${data.first_name} ${data.last_name}`,
-          imageUrl: data.image_url,
-        };
+        const existingUser = await User.findOne({ where: { id: data.id } });
 
-        // Update the user in the database using `update` method
-        await User.update(userData, { where: { id: data.id } });
-        res.json({ success: true });
-        break;
+        if (existingUser) {
+          await existingUser.update({
+            email: data.email_addresses?.[0]?.email_address || existingUser.email,
+            name: `${data.first_name || ""} ${data.last_name || ""}`.trim(),
+            imageUrl: data.image_url || existingUser.imageUrl,
+          });
+        }
+
+        return res.status(200).json({ success: true });
       }
 
       case "user.deleted": {
-        // Delete the user from the database using `destroy` method
         await User.destroy({ where: { id: data.id } });
-        res.json({ success: true });
-        break;
+        return res.status(200).json({ success: true });
       }
 
       default:
-        res.status(400).json({ success: false, message: "Unknown webhook type" });
-        break;
+        return res.status(200).json({ success: true });
     }
   } catch (error) {
-    // Handle any errors that occur
-    res.status(500).json({ success: false, message: error.message });
+    console.error("Webhook error:", error);
+    return res.status(400).json({ success: false, message: error.message });
   }
 };
-
