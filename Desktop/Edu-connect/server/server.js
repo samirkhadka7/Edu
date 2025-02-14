@@ -2,6 +2,10 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import sequelize from "./configs/pdatabase.js";
+import courseRouter from "./routes/courseRoute.js";
+import educatorRouter from "./routes/educatorRoutes.js";
+import connectCloudinary from "./configs/cloudinary.js";
+import userRouter from "./routes/userRoute.js";
 const authRoutes = require('./routes/authRoutes');
 
 // import { clerkWebhooks } from "./controllers/webhooks.js";
@@ -9,6 +13,7 @@ const authRoutes = require('./routes/authRoutes');
 dotenv.config();
 
 const app = express();
+await connectCloudinary ()
 app.use(cors());
 
 const port=process.env.port
@@ -20,6 +25,11 @@ app.use(cors({
 
 app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf.toString(); } })); // Clerk Webhooks need raw body
 
+//Routes
+app-get('/', (rea, res)=> res.send("API Working"))
+app. use('/api/educator', express.json(), educatorRouter)
+app.use('/api/course', express.json(), courseRouter)
+app.use('/api/user', express.json(), userRouter)
 // app.post("/clerk-webhook", clerkWebhooks);
 
 // Sync database after successful connection
