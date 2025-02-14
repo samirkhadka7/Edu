@@ -2,15 +2,25 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import sequelize from "./configs/pdatabase.js";
-import { clerkWebhooks } from "./controllers/webhooks.js";
+const authRoutes = require('./routes/authRoutes');
+
+// import { clerkWebhooks } from "./controllers/webhooks.js";
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
+
+const port=process.env.port
+
+app.use(cors({
+  origin: 'http://localhost:5173', // Update with your frontend URL
+  credentials: true
+}));
+
 app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf.toString(); } })); // Clerk Webhooks need raw body
 
-app.post("/clerk-webhook", clerkWebhooks);
+// app.post("/clerk-webhook", clerkWebhooks);
 
 // Sync database after successful connection
 sequelize

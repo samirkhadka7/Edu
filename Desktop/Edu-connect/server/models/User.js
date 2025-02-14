@@ -19,38 +19,34 @@
 // export default User
 
 
-import { DataTypes } from "sequelize";
-import sequelize from "../configs/pdatabase.js"; // Correct import
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = require('../configs/pdatabase'); // Database connection
 
-const User = sequelize.define(
-  "User",
-  {
-    id: {
-      type: DataTypes.STRING,
-      primaryKey: true,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: true,
-      },
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    imageUrl: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "https://example.com/default-avatar.png",
-    },
+const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    primaryKey: true
   },
-  {
-    timestamps: true,
-    freezeTableName: true, // Prevents table name from becoming "Users"
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+    validate: { isEmail: true }
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  address: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
-);
+});
 
-export default User;
+module.exports = User;
+
