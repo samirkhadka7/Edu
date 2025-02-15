@@ -19,6 +19,8 @@
 // export default User
 
 
+
+// postgress code
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../configs/pdatabase'); // Database connection
 
