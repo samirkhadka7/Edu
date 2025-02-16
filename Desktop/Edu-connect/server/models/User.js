@@ -21,13 +21,13 @@
 
 
 // postgress code
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../configs/pdatabase'); // Database connection
+import { DataTypes, Sequelize } from 'sequelize';
+import sequelize from '../configs/pdatabase.js'; // Database connection
 
 const User = sequelize.define('User', {
   id: {
     type: DataTypes.UUID,
-    defaultValue: Sequelize.UUIDV4,
+    defaultValue: DataTypes.UUIDV4, // Fixed this line
     primaryKey: true
   },
   email: {
@@ -50,5 +50,6 @@ const User = sequelize.define('User', {
   }
 });
 
-module.exports = User;
+export default User;
+
 

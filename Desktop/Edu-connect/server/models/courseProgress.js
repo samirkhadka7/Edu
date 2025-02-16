@@ -14,6 +14,8 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../configs/pdatabase.js';
 
+
+
 const CourseProgress = sequelize.define('CourseProgress', {
   id: {
     type: DataTypes.UUID,
