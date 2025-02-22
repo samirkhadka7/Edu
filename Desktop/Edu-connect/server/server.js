@@ -197,11 +197,20 @@ import cors from "cors";
 import 'dotenv/config';
 import sequelize from "./configs/pdatabase.js"; // Import database connection
 import { clerkWebhooks } from "./controllers/webhooks.js";
+import pkg from "pg"; 
 
+
+const { Pool } = pkg; // Destructure Pool correctly
 
 const app = express();
 
 app.use(cors());
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }, // Required for some hosted PostgreSQL services
+});
+
 
 const PORT = process.env.PORT || 5003;
 
