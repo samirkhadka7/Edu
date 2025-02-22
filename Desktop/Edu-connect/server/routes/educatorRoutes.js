@@ -52,31 +52,31 @@
 // export default educatorRouter;
 
 
-import express from 'express';
-import {
-    addCourse,
-    educatorDashboardData,
-    getEducatorCourses,
-    getEnrolledStudentsData,
-    updateRoleToEducator
-} from '../controllers/educatorController.js';
+// import express from 'express';
+// import {
+//     addCourse,
+//     educatorDashboardData,
+//     getEducatorCourses,
+//     getEnrolledStudentsData,
+//     updateRoleToEducator
+// } from '../controllers/educatorController.js';
 
-const educatorRouter = express.Router();
+// const educatorRouter = express.Router();
 
-// Update user role to Educator
-educatorRouter.patch('/update-role', updateRoleToEducator);
+// // Update user role to Educator
+// educatorRouter.patch('/update-role', updateRoleToEducator);
 
-// Add a new course
-educatorRouter.post('/add-course', addCourse);
+// // Add a new course
+// educatorRouter.post('/add-course', addCourse);
 
-// Get all courses created by the educator
-educatorRouter.get('/courses', getEducatorCourses);
+// // Get all courses created by the educator
+// educatorRouter.get('/courses', getEducatorCourses);
 
-// Get educator dashboard data
-educatorRouter.get('/dashboard', educatorDashboardData);
+// // Get educator dashboard data
+// educatorRouter.get('/dashboard', educatorDashboardData);
 
-// Get enrolled students data for an educator
-educatorRouter.get('/enrolled-students', getEnrolledStudentsData);
+// // Get enrolled students data for an educator
+// educatorRouter.get('/enrolled-students', getEnrolledStudentsData);
 
-export default educatorRouter;
+// export default educatorRouter;
 

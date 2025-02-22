@@ -115,121 +115,129 @@
 
 //Postgress code
 
-import { User, Course, CourseProgress, CourseRating } from '../models';
-import { Op } from 'sequelize';
+// import { User, Course, CourseProgress, CourseRating } from '../models';
+// import { Op } from 'sequelize';
+// import { Course } from '../models/Course.js';
+// import { User } from "../models/User.js"
+// import { CourseProgress } from '../models/courseProgress.js';
+// import { CourseRating } from "../models/Course.js"
+// import { Op } from 'sequelize';
 
-// Get User Data
-export const getUserData = async (req, res) => {
-  try {
-    const userId = req.auth.userId;
-    const user = await User.findByPk(userId);
+
+
+
+// // Get User Data
+// export const getUserData = async (req, res) => {
+//   try {
+//     const userId = req.auth.userId;
+//     const user = await User.findByPk(userId);
     
-    if (!user) {
-      return res.status(404).json({ success: false, message: 'User Not Found' });
-    }
+//     if (!user) {
+//       return res.status(404).json({ success: false, message: 'User Not Found' });
+//     }
 
-    res.status(200).json({ success: true, user });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+//     res.status(200).json({ success: true, user });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };
 
-// Users Enrolled Courses (Without Purchases)
-export const getEnrolledCourses = async (req, res) => {
-  try {
-    const userId = req.auth.userId;
-    const userData = await User.findByPk(userId, {
-      include: [{
-        model: Course,
-        as: 'enrolledCourses',
-        through: 'UserCourses' // Many-to-Many relationship table
-      }]
-    });
+// // Users Enrolled Courses (Without Purchases)
+// export const getEnrolledCourses = async (req, res) => {
+//   try {
+//     const userId = req.auth.userId;
+//     const userData = await User.findByPk(userId, {
+//       include: [{
+//         model: Course,
+//         as: 'enrolledCourses',
+//         through: 'UserCourses' // Many-to-Many relationship table
+//       }]
+//     });
 
-    res.status(200).json({ success: true, enrolledCourses: userData.enrolledCourses });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+//     res.status(200).json({ success: true, enrolledCourses: userData.enrolledCourses });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };
 
-// Update User Course Progress
-export const updateUserCourseProgress = async (req, res) => {
-  try {
-    const userId = req.auth.userId;
-    const { courseId, lectureId } = req.body;
+// // Update User Course Progress
+// export const updateUserCourseProgress = async (req, res) => {
+//   try {
+//     const userId = req.auth.userId;
+//     const { courseId, lectureId } = req.body;
     
-    const [progressData, created] = await CourseProgress.findOrCreate({
-      where: { userId, courseId },
-      defaults: { lectureCompleted: [lectureId] }
-    });
+//     const [progressData, created] = await CourseProgress.findOrCreate({
+//       where: { userId, courseId },
+//       defaults: { lectureCompleted: [lectureId] }
+//     });
 
-    if (!created) {
-      if (progressData.lectureCompleted.includes(lectureId)) {
-        return res.status(200).json({ success: true, message: 'Lecture Already Completed' });
-      }
+//     if (!created) {
+//       if (progressData.lectureCompleted.includes(lectureId)) {
+//         return res.status(200).json({ success: true, message: 'Lecture Already Completed' });
+//       }
       
-      // Append lectureId to the list of completed lectures
-      await progressData.update({
-        lectureCompleted: [...progressData.lectureCompleted, lectureId]
-      });
-    }
+//       // Append lectureId to the list of completed lectures
+//       await progressData.update({
+//         lectureCompleted: [...progressData.lectureCompleted, lectureId]
+//       });
+//     }
 
-    res.status(200).json({ success: true, message: 'Course Progress Updated' });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+//     res.status(200).json({ success: true, message: 'Course Progress Updated' });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };
 
-// Get User Course Progress
-export const getUserCourseProgress = async (req, res) => {
-  try {
-    const userId = req.auth.userId;
-    const { courseId } = req.body;
+// // Get User Course Progress
+// export const getUserCourseProgress = async (req, res) => {
+//   try {
+//     const userId = req.auth.userId;
+//     const { courseId } = req.body;
     
-    const progressData = await CourseProgress.findOne({ where: { userId, courseId } });
+//     const progressData = await CourseProgress.findOne({ where: { userId, courseId } });
 
-    res.status(200).json({ success: true, progressData });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
+//     res.status(200).json({ success: true, progressData });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: error.message });
+//   }
+// };
 
-// Add User Rating to Course (Without Purchases)
-export const addUserRating = async (req, res) => {
-  const userId = req.auth.userId;
-  const { courseId, rating } = req.body;
+// // Add User Rating to Course (Without Purchases)
+// export const addUserRating = async (req, res) => {
+//   const userId = req.auth.userId;
+//   const { courseId, rating } = req.body;
 
-  if (!courseId || !userId || !rating || rating < 1 || rating > 5) {
-    return res.status(400).json({ success: false, message: 'Invalid Details' });
-  }
+//   if (!courseId || !userId || !rating || rating < 1 || rating > 5) {
+//     return res.status(400).json({ success: false, message: 'Invalid Details' });
+//   }
 
-  try {
-    const course = await Course.findByPk(courseId);
-    if (!course) {
-      return res.status(404).json({ success: false, message: 'Course not found' });
-    }
+//   try {
+//     const course = await Course.findByPk(courseId);
+//     if (!course) {
+//       return res.status(404).json({ success: false, message: 'Course not found' });
+//     }
 
-    // Check if user is enrolled (instead of checking purchase)
-    const enrolled = await course.hasUser(userId);
-    if (!enrolled) {
-      return res.status(403).json({ success: false, message: 'User is not enrolled in this course.' });
-    }
+//     // Check if user is enrolled (instead of checking purchase)
+//     const enrolled = await course.hasUser(userId);
+//     if (!enrolled) {
+//       return res.status(403).json({ success: false, message: 'User is not enrolled in this course.' });
+//     }
 
-    // Update or create rating
-    const [courseRating, created] = await CourseRating.findOrCreate({
-      where: { userId, courseId },
-      defaults: { rating }
-    });
+//     // Update or create rating
+//     const [courseRating, created] = await CourseRating.findOrCreate({
+//       where: { userId, courseId },
+//       defaults: { rating }
+//     });
 
-    if (!created) {
-      await courseRating.update({ rating });
-    }
+//     if (!created) {
+//       await courseRating.update({ rating });
+//     }
 
-    return res.status(200).json({ success: true, message: 'Rating Added' });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
-  }
-};
+//     return res.status(200).json({ success: true, message: 'Rating Added' });
+//   } catch (error) {
+//     return res.status(500).json({ success: false, message: error.message });
+//   }
+// };
 
   
 

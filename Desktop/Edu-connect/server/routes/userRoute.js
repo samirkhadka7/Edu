@@ -45,30 +45,30 @@
 
 
 
-import express from 'express';
-import {
-    getUserData,
-    getEnrolledCourses,
-    updateUserCourseProgress,
-    getUserCourseProgress,
-    addUserRating
-} from '../controllers/userController.js';
+// import express from 'express';
+// import {
+//     getUserData,
+//     getEnrolledCourses,
+//     updateUserCourseProgress,
+//     getUserCourseProgress,
+//     addUserRating
+// } from '../controllers/userController.js';
 
-const userRouter = express.Router();
+// const userRouter = express.Router();
 
-// User data
-userRouter.get('/data', getUserData);
+// // User data
+// userRouter.get('/data', getUserData);
 
-// Get enrolled courses
-userRouter.get('/enrolled-courses', getEnrolledCourses);
+// // Get enrolled courses
+// userRouter.get('/enrolled-courses', getEnrolledCourses);
 
-// Update course progress
-userRouter.post('/update-course-progress', updateUserCourseProgress);
+// // Update course progress
+// userRouter.post('/update-course-progress', updateUserCourseProgress);
 
-// Get course progress
-userRouter.post('/get-course-progress', getUserCourseProgress);
+// // Get course progress
+// userRouter.post('/get-course-progress', getUserCourseProgress);
 
-// Add user rating
-userRouter.post('/add-rating', addUserRating);
+// // Add user rating
+// userRouter.post('/add-rating', addUserRating);
 
-export default userRouter;
+// export default userRouter;

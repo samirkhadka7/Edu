@@ -48,125 +48,133 @@
 
 // models/Lecture.js
 
-const Lecture = sequelize.define('Lecture', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  lectureId: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  lectureTitle: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  lectureDuration: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  lectureUrl: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  isPreviewFree: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false
-  },
-  lectureOrder: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-});
+// import { DataTypes } from 'sequelize';
+// import sequelize from '../configs/pdatabase.js';
 
-// models/Chapter.js
-const Chapter = sequelize.define('Chapter', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  chapterId: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  chapterOrder: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  chapterTitle: {
-    type: DataTypes.STRING,
-    allowNull: false
-  }
-});
+// import { DataTypes } from "sequelize";
+// import sequelize from "../configs/pdatabase.js";
+// import { User } from "../User.js";
 
-// models/CourseRating.js
-const CourseRating = sequelize.define('CourseRating', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  rating: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    validate: {
-      min: 1,
-      max: 5
-    }
-  }
-});
 
-// models/Course.js (Updated - Removed Pricing)
-const Course = sequelize.define('Course', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  courseTitle: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  courseDescription: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
-  courseThumbnail: {
-    type: DataTypes.STRING
-  },
-  isPublished: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true
-  }
-}, {
-  timestamps: true
-});
+// const Lecture = sequelize.define('Lecture', {
+//   id: {
+//     type: DataTypes.INTEGER,
+//     primaryKey: true,
+//     autoIncrement: true
+//   },
+//   lectureId: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   lectureTitle: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   lectureDuration: {
+//     type: DataTypes.INTEGER,
+//     allowNull: false
+//   },
+//   lectureUrl: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   isPreviewFree: {
+//     type: DataTypes.BOOLEAN,
+//     allowNull: false
+//   },
+//   lectureOrder: {
+//     type: DataTypes.INTEGER,
+//     allowNull: false
+//   }
+// });
 
-// Define relationships
-Course.belongsTo(User, { 
-  as: 'educator',
-  foreignKey: {
-    name: 'educatorId',
-    allowNull: false
-  }
-});
+// // models/Chapter.js
+// const Chapter = sequelize.define('Chapter', {
+//   id: {
+//     type: DataTypes.INTEGER,
+//     primaryKey: true,
+//     autoIncrement: true
+//   },
+//   chapterId: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   chapterOrder: {
+//     type: DataTypes.INTEGER,
+//     allowNull: false
+//   },
+//   chapterTitle: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   }
+// });
 
-Course.belongsToMany(User, {
-  through: 'CourseEnrollments',  // Enrollments without purchase
-  as: 'enrolledStudents'
-});
+// // models/CourseRating.js
+// const CourseRating = sequelize.define('CourseRating', {
+//   id: {
+//     type: DataTypes.INTEGER,
+//     primaryKey: true,
+//     autoIncrement: true
+//   },
+//   rating: {
+//     type: DataTypes.INTEGER,
+//     allowNull: false,
+//     validate: {
+//       min: 1,
+//       max: 5
+//     }
+//   }
+// });
 
-Course.hasMany(Chapter);
-Chapter.belongsTo(Course);
+// // models/Course.js (Updated - Removed Pricing)
+// const Course = sequelize.define('Course', {
+//   id: {
+//     type: DataTypes.INTEGER,
+//     primaryKey: true,
+//     autoIncrement: true
+//   },
+//   courseTitle: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   courseDescription: {
+//     type: DataTypes.TEXT,
+//     allowNull: false
+//   },
+//   courseThumbnail: {
+//     type: DataTypes.STRING
+//   },
+//   isPublished: {
+//     type: DataTypes.BOOLEAN,
+//     defaultValue: true
+//   }
+// }, {
+//   timestamps: true
+// });
 
-Chapter.hasMany(Lecture);
-Lecture.belongsTo(Chapter);
+// // Define relationships
+// Course.belongsTo(User, { 
+//   as: 'educator',
+//   foreignKey: {
+//     name: 'educatorId',
+//     allowNull: false
+//   }
+// });
 
-Course.hasMany(CourseRating);
-CourseRating.belongsTo(Course);
-User.hasMany(CourseRating);
-CourseRating.belongsTo(User);
+// Course.belongsToMany(User, {
+//   through: 'CourseEnrollments',  // Enrollments without purchase
+//   as: 'enrolledStudents'
+// });
 
-export default Course;
+// Course.hasMany(Chapter);
+// Chapter.belongsTo(Course);
+
+// Chapter.hasMany(Lecture);
+// Lecture.belongsTo(Chapter);
+
+// Course.hasMany(CourseRating);
+// CourseRating.belongsTo(Course);
+// User.hasMany(CourseRating);
+// CourseRating.belongsTo(User);
+
+// export {Course, CourseRating, Lecture, Chapter};

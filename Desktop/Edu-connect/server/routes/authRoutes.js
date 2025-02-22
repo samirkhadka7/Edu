@@ -101,48 +101,49 @@
 
 
 
-import express from 'express';
-import bcrypt from 'bcryptjs';
-import User from '../models/user.js';// Ensure correct path
+// import express from 'express';
+// import bcrypt from 'bcryptjs';
+// import {User} from '../models/User.js';// Ensure correct path
 
-const router = express.Router();
 
-// Register user
-router.post('/register', async (req, res) => {
-    const { email, password } = req.body;
+// const router = express.Router();
 
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Email and password are required' });
-    }
+// // Register user
+// router.post('/register', async (req, res) => {
+//     const { email, password } = req.body;
 
-    try {
-        const existingUser = await User.findOne({ where: { email } });
-        if (existingUser) return res.status(400).json({ message: 'User already exists' });
+//     if (!email || !password) {
+//         return res.status(400).json({ message: 'Email and password are required' });
+//     }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        await User.create({ email, password: hashedPassword });
+//     try {
+//         const existingUser = await User.findOne({ where: { email } });
+//         if (existingUser) return res.status(400).json({ message: 'User already exists' });
 
-        res.status(201).json({ message: 'User registered successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error registering user', error: error.message });
-    }
-});
+//         const hashedPassword = await bcrypt.hash(password, 10);
+//         await User.create({ email, password: hashedPassword });
 
-// Login user
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+//         res.status(201).json({ message: 'User registered successfully' });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Error registering user', error: error.message });
+//     }
+// });
 
-    try {
-        const user = await User.findOne({ where: { email } });
-        if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+// // Login user
+// router.post('/login', async (req, res) => {
+//     const { email, password } = req.body;
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+//     try {
+//         const user = await User.findOne({ where: { email } });
+//         if (!user) return res.status(400).json({ message: 'Invalid credentials' });
 
-        res.status(200).json({ message: 'Login successful' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error logging in', error: error.message });
-    }
-});
+//         const isMatch = await bcrypt.compare(password, user.password);
+//         if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-export default router;
+//         res.status(200).json({ message: 'Login successful' });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Error logging in', error: error.message });
+//     }
+// });
+
+// export default router;

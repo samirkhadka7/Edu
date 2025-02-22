@@ -1,47 +1,50 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import sequelize from "./configs/pdatabase.js";
-import courseRouter from "./routes/courseRoute.js";
-import educatorRouter from "./routes/educatorRoutes.js";
-import connectCloudinary from "./configs/cloudinary.js";
-import userRouter from "./routes/userRoute.js";
-import authRoutes from "./routes/authRoutes.js";
+// import express from "express";
+// import cors from "cors";
+// import dotenv from "dotenv";
+// import sequelize from "./configs/pdatabase.js";
+// import courseRouter from "./routes/courseRoute.js";
+// import educatorRouter from "./routes/educatorRoutes.js";
+// import connectCloudinary from "./configs/cloudinary.js";
+// import userRouter from "./routes/userRoute.js";
+// import authRoutes from "./routes/authRoutes.js";
 
-dotenv.config();
+// dotenv.config();
 
-const app = express();
+// const app = express();
 
 // Ensure Cloudinary connects before starting the server
-await connectCloudinary();
+// await connectCloudinary();
 
-const port = process.env.PORT || 5001;
+// middleware
+// app.use(cors())
+
+// const port = process.env.PORT || 5001;
 
 // CORS Configuration
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Update with your frontend URL
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // Update with your frontend URL
+//     credentials: true,
+//   })
+// );
 
-app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf.toString(); } })); // Clerk Webhooks need raw body
+// app.use(express.json({ verify: (req, res, buf) => { req.rawBody = buf.toString(); } })); // Clerk Webhooks need raw body
 
 // Routes
-app.get("/", (req, res) => res.send("API Working"));
-app.use("/api/educator", educatorRouter);
-app.use("/api/course", courseRouter);
-app.use("/api/user", userRouter);
-app.use("/api/auth", authRoutes); // Auth Routes
+// app.get("/", (req, res) => res.send("API Working"));
+// app.use("/api/educator", educatorRouter);
+// app.use("/api/course", courseRouter);
+// app.use("/api/user", userRouter);
+// app.use("/api/auth", authRoutes); // Auth Routes
 
 // Sync database after successful connection
-sequelize
-  .sync()
-  .then(() => {
-    console.log("Database synced");
-    app.listen(port, () => console.log(`Server running on port ${port}`));
-  })
-  .catch((err) => console.error("Error syncing database:", err));
+// sequelize
+//   .sync()
+//   .then(() => {
+//     console.log("Database synced");
+//     app.listen(port, () => console.log(`Server running on port ${port}`));
+//   })
+//   .catch((err) => console.error("Error syncing database:", err));
 
 
 
@@ -168,3 +171,53 @@ sequelize
 //   console.log("Server running on port 5001");
 // });
 
+
+
+// import express from "express";
+// import cors from "cors";
+// import 'dotenv/config'
+
+
+// const app = express();
+
+
+// app.use(cors())
+
+// const PORT = process.env.PORT || 5003;
+
+// app.get("/", (req, res) => res.send("API Working"));
+
+// app.listen(PORT, ()=>{
+//   console.log(`server is running on port ${PORT}`)
+// })
+
+
+import express from "express";
+import cors from "cors";
+import 'dotenv/config';
+import sequelize from "./configs/pdatabase.js"; // Import database connection
+import { clerkWebhooks } from "./controllers/webhooks.js";
+
+
+const app = express();
+
+app.use(cors());
+
+const PORT = process.env.PORT || 5003;
+
+app.get("/", (req, res) => res.send("API Working"));
+app.post('/clerk', express.json(), clerkWebhooks)
+
+// Connect to the database
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connected successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
