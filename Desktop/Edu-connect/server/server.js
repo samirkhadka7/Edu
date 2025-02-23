@@ -236,6 +236,7 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import connectDB from './configs/pdatabase.js';
+import { clerkWebhooks } from './controllers/webhooks.js';
 
 // Initialize Express
 const app = express();
@@ -250,6 +251,7 @@ app.use(cors());
 
 // Routes
 app.get('/', (req, res) => res.send('API Working'));
+app.post('/clerk', express.json(), clerkWebhooks)
 
 // Start the server
 const PORT = process.env.PORT || 5003;
