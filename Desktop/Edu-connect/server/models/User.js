@@ -55,35 +55,35 @@
 // export default User;
 
 
-import { DataTypes } from "sequelize";
-import sequelize from "../configs/pdatabase.js"; // Import the Sequelize connection
+// import { DataTypes } from "sequelize";
+// import sequelize from "../configs/pdatabase.js"; // Import the Sequelize connection
 
-const User = sequelize.define(
-  "User",
-  {
-    id: {
-      type: DataTypes.UUID, // Use UUID instead of String for unique IDs
-      defaultValue: DataTypes.UUIDV4, // Auto-generate UUID
-      primaryKey: true,
-      allowNull: false,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true, // Ensure unique emails
-    },
-    imageUrl: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  },
-  {
-    timestamps: true, // Adds createdAt & updatedAt columns
-  }
-);
+// const User = sequelize.define(
+//   "User",
+//   {
+//     id: {
+//       type: DataTypes.UUID, // Use UUID instead of String for unique IDs
+//       defaultValue: DataTypes.UUIDV4, // Auto-generate UUID
+//       primaryKey: true,
+//       allowNull: false,
+//     },
+//     name: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//     email: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//       unique: true, // Ensure unique emails
+//     },
+//     imageUrl: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//   },
+//   {
+//     timestamps: true, // Adds createdAt & updatedAt columns
+//   }
+// );
 
-export default User;
+// export default User;

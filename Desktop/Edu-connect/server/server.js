@@ -192,41 +192,65 @@
 // })
 
 
-import express from "express";
-import cors from "cors";
+// import express from "express";
+// import cors from "cors";
+// import 'dotenv/config';
+// import sequelize from "./configs/pdatabase.js"; // Import database connection
+// import { clerkWebhooks } from "./controllers/webhooks.js";
+// import pkg from "pg"; 
+// // 
+
+// // const { Pool } = pkg; // Destructure Pool correctly
+
+// const app = express();
+
+// app.use(cors());
+
+// // const pool = new Pool({
+// //   connectionString: process.env.DATABASE_URL,
+// //   ssl: { rejectUnauthorized: false }, // Required for some hosted PostgreSQL services
+// // });
+
+
+// const PORT = process.env.PORT || 5003;
+
+// app.get("/", (req, res) => res.send("API Working"));
+// app.post('/clerk', express.json(), clerkWebhooks)
+
+// // Connect to the database
+// sequelize.authenticate()
+//   .then(() => {
+//     console.log('Database connected successfully.');
+//   })
+//   .catch(err => {
+//     console.error('Unable to connect to the database:', err);
+//   });
+
+// // Start the server
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+
+
+import express from 'express';
+import cors from 'cors';
 import 'dotenv/config';
-import sequelize from "./configs/pdatabase.js"; // Import database connection
-import { clerkWebhooks } from "./controllers/webhooks.js";
-import pkg from "pg"; 
+import connectDB from './configs/pdatabase.js';
 
-
-const { Pool } = pkg; // Destructure Pool correctly
-
+// Initialize Express
 const app = express();
 
+// Connect to database
+await connectDB()
+
+// Middlewares
 app.use(cors());
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }, // Required for some hosted PostgreSQL services
-});
 
 
-const PORT = process.env.PORT || 5003;
-
-app.get("/", (req, res) => res.send("API Working"));
-app.post('/clerk', express.json(), clerkWebhooks)
-
-// Connect to the database
-sequelize.authenticate()
-  .then(() => {
-    console.log('Database connected successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// Routes
+app.get('/', (req, res) => res.send('API Working'));
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 5003;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
