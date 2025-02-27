@@ -1,51 +1,90 @@
+import React from 'react'
+import Navbar from './components/Navbar'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Home from './Pages/Home'
+import Courses from './Pages/Courses'
+import Login from './Pages/auth/Login'
+import Signup from './Pages/auth/Signup'
+import Footer from './components/Footer'
+import Profile from './Pages/Profile'
+import Admin from './Pages/admin/Admin'
+import Dashboard from './Pages/admin/Dashboard'
+import Course from './Pages/admin/Course'
+import CreateCourse from './Pages/admin/CreateCourse'
+import UpdateCourse from './Pages/admin/UpdateCourse'
+import CreateLecture from './Pages/admin/CreateLecture'
+import EditLecture from './Pages/admin/EditLecture'
+import CourseDetails from './Pages/CourseDetails'
 
-import { Route, Routes } from 'react-router-dom'
-import Home from './pages/student/Home'
-import CoursesList from './pages/student/CoursesList'
-import CourseDetails from './pages/student/CourseDetails'
-import MyEnrollments from './pages/student/MyEnrollments'
-import Player from './pages/student/Player'
-import Loading from './components/student/Loading'
-import Educator from './pages/educator/Educator'
-import Dashboard from './pages/educator/Dashboard'
-import AddCourse from './pages/educator/AddCourse'
-import MyCourses from './pages/educator/MyCourses'
-import Navbar from './components/student/Navbar'
-// import Login from './pages/student/Login'
-// import Register from './pages/student/Register'
-import StudentsEnrolled from './pages/educator/StudentsEnrolled'
-import "quill/dist/quill.snow.css";
+const router = createBrowserRouter([
+   {
+    path:"/",
+    element: <><Navbar/><Home/></>
+   },
+   {
+    path:"/courses",
+    element:<><Navbar/><Courses/></>
+   },
+   {
+    path:"/login",
+    element: <><Navbar/><Login/></>
+   },
+   {
+    path:"/signup",
+    element: <><Navbar/><Signup/></>
+   },
+   {
+    path:"/profile",
+    element: <><Navbar/><Profile/></>
+   },
+   {
+    path:"/courses/:courseId",
+    element: <><Navbar/><CourseDetails/></>
+   },
+   {
+    path:"/admin",
+    element: <><Navbar/><Admin/></>,
+    children:[
+      {
+        path: "dashboard",
+        element:<Dashboard/>
+      },
+      {
+        path: "course",
+        element:<Course/>
+      },
+      {
+        path: "course/create",
+        element:<CreateCourse/>
+      },
+      // {
+      //   path: "course/:courseId",
+      //   element:<UpdateCourse/>             // orginal
+      // },
+      {
+        path:"/admin/course/:courseId",
+        element:<UpdateCourse/>             // update
+      },
+      {
+        path: "course/:courseId/lecture",
+        element:<CreateLecture/>
+      },
+      {
+        path: "course/:courseId/lecture/:lectureId",
+        element:<EditLecture/>
+      },
+    ]
+   },
 
+])
 
 
 const App = () => {
-
   return (
-      <div className='text-default min-h-screen bg-white'>
-
-      <Navbar />
-      <Routes>
-        <Route path='/' element={<Home />}/>
-        <Route path='/course-list' element={<CoursesList/>}/>
-        <Route path='/course-list/:input' element={<CoursesList /> }/>
-        <Route path='/course/:id' element={<CourseDetails />}/>
-        <Route path='/my-enrollments' element={<MyEnrollments />}/>
-        <Route path='/player/:courseId' element={<Player />}/>
-        <Route path='/loading/:path' element={<Loading />}/>
-        {/* <Route path='/logins' element={<Login />}/>
-        <Route path='/registers' element={<Register />}/> */}
-        {/* <Route path='/login' element={<Login />}/>
-        <Route path='/register' element={<Register />}/> */}
-
-
-        <Route path='/educator' element={<Educator />}>
-          <Route path='/educator' element={<Dashboard />}/>
-          <Route path='add-course' element={<AddCourse />}/>
-          <Route path='my-courses' element={<MyCourses />}/>
-          <Route path='student-enrolled' element={<StudentsEnrolled />}/>
-        </Route>
-      </Routes>
-    </div>
+    <>
+      <RouterProvider router={router}/>
+      <Footer/>
+    </>
   )
 }
 
