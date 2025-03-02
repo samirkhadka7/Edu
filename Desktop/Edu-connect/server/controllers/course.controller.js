@@ -115,67 +115,9 @@ export const getCreatorCourses = async (req, res) => {
 };
   
 
-// export const editCourse = async (req, res) => {
-//     try {
-//       const courseId = req.params.courseId;
-//       const { courseTitle, subTitle, description, category, courseLevel, coursePrice } = req.body;
-//       const file = req.file;
-  
-//       // Find the course by its primary key and include lectures (if needed)
-//       let course = await Course.findByPk(courseId, {
-//         include: [{ model: Lecture, as: "lectures" }]
-//       });
-  
-//       if (!course) {
-//         return res.status(404).json({
-//           message: "Course not found!"
-//         });
-//       }
-  
-//       let courseThumbnail;
-//       if (file) {
-//         const fileUri = getDataUri(file);
-//         courseThumbnail = await cloudinary.uploader.upload(fileUri);
-//       }
-  
-//       // Normalize courseLevel to have the first letter capitalized, if provided
-//       let normalizedCourseLevel = courseLevel;
-//       if (courseLevel) {
-//         normalizedCourseLevel = courseLevel.charAt(0).toUpperCase() + courseLevel.slice(1).toLowerCase();
-//       }
-  
-//       const updateData = {
-//         courseTitle,
-//         subTitle,
-//         description,
-//         category,
-//         courseLevel: normalizedCourseLevel,
-//         coursePrice,
-//         courseThumbnail: courseThumbnail ? courseThumbnail.secure_url : course.courseThumbnail
-//       };
-  
-//       await course.update(updateData);
-  
-//       return res.status(200).json({
-//         success: true,
-//         course,
-//         message: "Course updated successfully"
-//       });
-//     } catch (error) {
-//       console.error(error);
-//       return res.status(500).json({
-//         message: "Failed to update course",
-//         success: false
-//       });
-//     }
-// };
-  
-
-
 export const editCourse = async (req, res) => {
     try {
-      // Change to match the route parameter
-      const courseId = req.params.id;
+      const courseId = req.params.courseId;
       const { courseTitle, subTitle, description, category, courseLevel, coursePrice } = req.body;
       const file = req.file;
   
@@ -227,6 +169,64 @@ export const editCourse = async (req, res) => {
       });
     }
 };
+  
+
+
+// export const editCourse = async (req, res) => {
+//     try {
+//       // Change to match the route parameter
+//       const courseId = req.params.id;
+//       const { courseTitle, subTitle, description, category, courseLevel, coursePrice } = req.body;
+//       const file = req.file;
+  
+//       // Find the course by its primary key and include lectures (if needed)
+//       let course = await Course.findByPk(courseId, {
+//         include: [{ model: Lecture, as: "lectures" }]
+//       });
+  
+//       if (!course) {
+//         return res.status(404).json({
+//           message: "Course not found!"
+//         });
+//       }
+  
+//       let courseThumbnail;
+//       if (file) {
+//         const fileUri = getDataUri(file);
+//         courseThumbnail = await cloudinary.uploader.upload(fileUri);
+//       }
+  
+//       // Normalize courseLevel to have the first letter capitalized, if provided
+//       let normalizedCourseLevel = courseLevel;
+//       if (courseLevel) {
+//         normalizedCourseLevel = courseLevel.charAt(0).toUpperCase() + courseLevel.slice(1).toLowerCase();
+//       }
+  
+//       const updateData = {
+//         courseTitle,
+//         subTitle,
+//         description,
+//         category,
+//         courseLevel: normalizedCourseLevel,
+//         coursePrice,
+//         courseThumbnail: courseThumbnail ? courseThumbnail.secure_url : course.courseThumbnail
+//       };
+  
+//       await course.update(updateData);
+  
+//       return res.status(200).json({
+//         success: true,
+//         course,
+//         message: "Course updated successfully"
+//       });
+//     } catch (error) {
+//       console.error(error);
+//       return res.status(500).json({
+//         message: "Failed to update course",
+//         success: false
+//       });
+//     }
+// };
 
 
 export const getCourseById = async (req, res) => {
